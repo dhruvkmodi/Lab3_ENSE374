@@ -78,19 +78,29 @@ function tasklist(req, res)
 
 
 
+var bodyParser = require('body-parser');
+DataSetup.set('view engine', 'ejs');
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+DataSetup.get('/', LoginRegister);
+
+function LoginRegister(req, res) 
+{
+  res.render('Lab2');
+}
+ 
 
 
-
-DataSetup.use(express.static('Data'));
-
-DataSetup.get("/",function (req, res) {
-  res.sendFile(__dirname + "/Data/Lab2.html")
-});
-
-DataSetup.post('/Login', login);
-
+DataSetup.post('/login', urlencodedParser, login);
 function login(req, res)
 {
-    res.sendFile('Lab2.html', { root: path.join(__dirname, '/Data') });
+    res.json(req.body);
 }
+
+DataSetup.post('/register', urlencodedParser, login);
+function login(req, res)
+{
+    res.json(req.body);
+}
+
 
